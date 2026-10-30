@@ -1,0 +1,93 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    },
+    {
+      "src": "employee ui/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "it_department/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/$",
+      "status": 308,
+      "headers": {
+        "Location": "/employee-ui/"
+      }
+    },
+    {
+      "src": "^/employee/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/employee-ui/"
+      }
+    },
+    {
+      "src": "^/employee-ui$",
+      "status": 308,
+      "headers": {
+        "Location": "/employee-ui/"
+      }
+    },
+    {
+      "src": "^/employee-ui/(.*)",
+      "dest": "/employee ui/$1"
+    },
+    {
+      "src": "^/employee/(.*)",
+      "dest": "/employee ui/$1"
+    },
+    {
+      "src": "^/it/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/it_department/"
+      }
+    },
+    {
+      "src": "^/it_department$",
+      "status": 308,
+      "headers": {
+        "Location": "/it_department/"
+      }
+    },
+    {
+      "src": "^/it_department/(.*)",
+      "dest": "/it_department/$1"
+    },
+    {
+      "src": "^/it/(.*)",
+      "dest": "/it_department/$1"
+    },
+    {
+      "src": "^/style\\.css$",
+      "dest": "/employee ui/style.css"
+    },
+    {
+      "src": "^/app\\.js$",
+      "dest": "/employee ui/app.js"
+    },
+    {
+      "src": "^/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.py"
+    }
+  ],
+  "env": {
+    "ENVIRONMENT": "production",
+    "LLM_PROVIDER": "groq"
+  }
+}
